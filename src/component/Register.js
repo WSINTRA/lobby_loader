@@ -1,19 +1,40 @@
 import React from 'react';
+import { Container, Button, Input, Divider, Icon, Grid, Segment } from 'semantic-ui-react'
 
 function Register(props) {
 
 return (
     <div className="App">
     <h1> Register New User </h1>
-    <label>Email</label>
-    <input name="email"onChange={(e)=>props.registerFormControl(e)}type="text" placeholder="email" value={props.email}/>
-    <br/><label>Username </label>
-    <input name="username"onChange={(e)=>props.registerFormControl(e)}type="text" placeholder="username" value={props.username}/>
-    <br/><label>Password </label>
-    <input name="password"onChange={(e)=>props.registerFormControl(e)}type="password" placeholder="password" value={props.password}/>
-    <br/><label>Confirm Password </label>
+     <Container>
+    <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+    <Grid.Column style={{ maxWidth: 450 }}>
+    <Segment stacked>
+     <Input iconPosition='left' placeholder='Email'>
+      <Icon name='at' />
+      <input name="email"onChange={(e)=>props.registerFormControl(e)}type="text" value={props.email}/>
+    </Input>
+    <br/>
+    
+    <Input iconPosition='left'placeholder='Username' >
+      <Icon name="user" />
+    <input name="username"onChange={(e)=>props.registerFormControl(e)}type="text" value={props.username}/>
+    </Input>
+    <br/>
+    <Input iconPosition='left'placeholder="Password">
+    <Icon name ="lock" />
+    <input name="password"onChange={(e)=>props.registerFormControl(e)}type="password" value={props.password}/>
+    </Input>
+    <br/>
+     <Input iconPosition='left'placeholder="Password">
+    <Icon name ="lock" />
     <input name="confirmPass"onChange={(e)=>props.registerFormControl(e)}type="password" placeholder="confirm password" value={props.confirmPassword}/>
-    <button  onClick={(e)=>props.submit(props)}>Register</button>
+     </Input><br/>
+    <Button  onClick={(e)=>props.submit(props)}>Register</Button>
+    </Segment>
+    </Grid.Column>
+    </Grid>
+    </Container>
     </div>
 	);
 }
