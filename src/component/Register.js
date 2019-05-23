@@ -36,7 +36,7 @@ return (
     </Grid>
     </Container>
     </div>
-	);
+    );
 }
 
 export default Register;
