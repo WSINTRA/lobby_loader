@@ -1,6 +1,6 @@
 import React from 'react'
-import { Input, Icon,Button, Menu } from 'semantic-ui-react'
-import {Link, NavLink } from 'react-router-dom'
+import { Icon,Button, Menu } from 'semantic-ui-react'
+import {Link } from 'react-router-dom'
 
 function Navbar(props) {
 
@@ -56,7 +56,7 @@ return (
       
       </Menu.Item>
       <Menu.Item>
-      {props.loggedIn ? <Button>Log-out</Button> : <Link to="/login">
+      {props.loggedIn ? <Button onClick={props.logout}>Log-out</Button> : <Link to="/login">
       <Button>Log-in</Button>
       </Link>}
       

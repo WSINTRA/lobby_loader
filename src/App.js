@@ -19,8 +19,7 @@ class App extends React.Component {
     password: "",
     email: "",
     confirmPass: "",
-    loggedIn: false,
-    userData: [],
+    userData: null,
   }
 //////////////////////////
 componentDidMount(){
@@ -40,7 +39,7 @@ return res.json()
 .then(res => 
 
     this.setState({
-           loggedIn: true,
+          
            userData: res.user,
            }) 
     )
@@ -49,6 +48,16 @@ return res.json()
 }
 }
 //////////////////////////
+logOut = () => {
+  localStorage.removeItem('myJWT')
+  this.setState({
+    userData: null
+  }, () => this.props.history.push("/home")
+  )
+  
+}
+
+/////////////////////////
   registerFormControl = (event) =>{
   
     this.setState({
@@ -115,11 +124,12 @@ return res.json()
 .then(userData => {
   localStorage.setItem('myJWT', userData.jwt); 
   this.setState({
-       loggedIn: true,
+       
        userData: userData.auth
      } )
 
-     } )
+     } ).then( () => this.props.history.push("/login") )
+
       })
      .catch((err) => {
          alert("Incorrect username or password")
@@ -149,7 +159,7 @@ return res.json()
 .then(userData => {
   localStorage.setItem('myJWT', userData.jwt); 
   this.setState({
-       loggedIn: true,
+       
        userData: userData.auth
      } )
      } )
@@ -160,14 +170,13 @@ return res.json()
 }
 
   render () {
-    console.log("props", this.props)
-    const { loggedIn, userData, username, password, confirmPass } = this.state
+    const { userData, username, password, confirmPass } = this.state
   return (
 
      <div>
-     <Navbar loggedIn={this.state.loggedIn}/>
+     <Navbar logout={this.logOut}loggedIn={userData}/>
      <Switch>
-     <Route path="/register" render={()=> {return !loggedIn ?
+     <Route path="/register" render={()=> {return !userData ?
      <Register 
       submit={this.onRegisterFormSubmit}
       registerFormControl={this.registerFormControl}
@@ -175,14 +184,14 @@ return res.json()
       confirmPassword={confirmPass}
       password={password} /> : <Redirect from="/register" to="/" />}}/>
       <Route path="/login" render={()=> <Login 
-      loggedIn={loggedIn}
+      loggedIn={userData}
       submit={this.loginSubmit}
       loginFormControl={this.registerFormControl}
       username={username}  
       password={password} />} />
       <Route path="/games" component={Games} />
       <Route path="/parties" component={Parties} />
-      <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={loggedIn}handleEdit={this.editSubmit}/>} } />
+      <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
       <Route path="/profile" render={()=>{return <Profile userData={userData}/>} } />
       <Route path="/" component={Home} />
        

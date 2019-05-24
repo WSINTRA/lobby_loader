@@ -1,21 +1,21 @@
 import React from 'react'
 import { Grid, Container, Header, Image } from 'semantic-ui-react'
-import {Link, NavLink } from 'react-router-dom'
+import {Link, NavLink, Redirect } from 'react-router-dom'
 
 
 function Profile(props) {
-	console.log(props.userData)
-const { username, image_url, display_name } = props.userData
+console.log(props)
 return (
-	<Container>
-	 <Grid celled>
+  <fragment>
+  {props.userData ? <Container>
+   <Grid celled>
     <Grid.Row>
       <Grid.Column width={3}>
-        {image_url === null ? <Image circular src='https://react.semantic-ui.com/images/avatar/large/patrick.png' /> : 
-    <Image circular src={image_url} />} 
+        {props.userData.image_url === null ? <Image circular src='https://react.semantic-ui.com/images/avatar/large/patrick.png' /> : 
+    <Image circular src={props.userData.image_url} />} 
       </Grid.Column>
       <Grid.Column width={13}>
-       <h1>Welcome {username}</h1><Link from="/profile" to="/edit"><h4 position="right">Edit profile</h4></Link>
+       <h1>Welcome {props.userData.username}</h1><Link from="/profile" to="/edit"><h4 position="right">Edit profile</h4></Link>
       </Grid.Column>
     </Grid.Row>
 
@@ -31,8 +31,9 @@ return (
       </Grid.Column>
     </Grid.Row>
   </Grid>
-   </Container>
-	///////////////////////
+   </Container> : <Redirect from="/profile" to="/login" />}
+	
+	</fragment>
 	);
 }
 
