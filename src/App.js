@@ -72,7 +72,7 @@ return res.json()
   return (
 
      <div>
-     <Navbar/>
+     <Navbar loggedIn={this.state.loggedIn}/>
      <Switch>
      <Route path="/register" render={()=> <Register 
       submit={this.onRegisterFormSubmit}
