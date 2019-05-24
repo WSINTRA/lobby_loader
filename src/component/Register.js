@@ -4,7 +4,7 @@ import { Container, Button, Input, Divider, Icon, Grid, Segment } from 'semantic
 function Register(props) {
 
 return (
-    <div className="App">
+    <div>
     <h1> Register New User </h1>
      <Container>
     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>

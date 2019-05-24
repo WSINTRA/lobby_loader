@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container, Button, Input, Divider, Icon, Grid, Segment } from 'semantic-ui-react'
+import {Redirect } from 'react-router-dom'
+import { Container, Button, Input, Divider, Icon, Grid, Segment,} from 'semantic-ui-react'
 
 function Login(props) {
 
 return (
     <div> 
-    
+    {props.loggedIn ? <Redirect from="/login" to="/profile"/> : 
     <Container>
 
     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
@@ -25,7 +26,8 @@ return (
      </Segment>
     </Grid.Column>
     </Grid>
-    </Container>
+    </Container>}
+    
     </div>
 	);
 }
