@@ -16,15 +16,16 @@ return (
       </Grid.Column>
       <Grid.Column width={13}>
        <h1>Welcome {props.userData.username}</h1><Link from="/profile" to="/edit"><h4 position="right">Edit profile</h4></Link>
+       <p>{props.userData.bio}</p>
       </Grid.Column>
     </Grid.Row>
 
     <Grid.Row>
       <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+        <p>{props.userData.tag_line}</p>
       </Grid.Column>
       <Grid.Column width={10}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+        <h3>Games in your collection</h3>
       </Grid.Column>
       <Grid.Column width={3}>
         <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
