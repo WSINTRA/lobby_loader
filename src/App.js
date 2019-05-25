@@ -20,9 +20,31 @@ class App extends React.Component {
     email: "",
     confirmPass: "",
     userData: null,
+    allGames: [],
+    filter: "",
   }
+  ///////////////////////
+   filterChange = (e) => {
+      this.setState({
+      filter:e.target.value
+    })
+  }
+
+  filterByGame = (filter) => {
+  let allGames = [...this.state.allGames]
+  const games = allGames.filter(game=> game.name.toLowerCase().includes(filter.toLowerCase()))
+  return games
+}
 //////////////////////////
 componentDidMount(){
+fetch('http://localhost:3050/games')
+.then(res => res.json()
+).then(response=> {
+  this.setState({
+     allGames: response
+  })
+})
+
 if (localStorage.myJWT) {
 fetch('http://localhost:3050/profile', {
   method: 'GET',
@@ -170,7 +192,7 @@ return res.json()
 }
 
   render () {
-    const { userData, username, password, confirmPass } = this.state
+    const { filter, allGames, userData, username, password, confirmPass } = this.state
   return (
 
      <div>
@@ -189,7 +211,7 @@ return res.json()
       loginFormControl={this.registerFormControl}
       username={username}  
       password={password} />} />
-      <Route path="/games" component={Games} />
+      <Route path="/games" render={()=>{return <Games filterChange={this.filterChange}filterValue={filter}allGames={this.filterByGame(filter)} />}} />
       <Route path="/parties" component={Parties} />
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
       <Route path="/profile" render={()=>{return <Profile userData={userData}/>} } />
