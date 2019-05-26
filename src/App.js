@@ -10,11 +10,12 @@ import Profile from './component/Profile'
 import Games from './component/Games'
 import Parties from './component/Parties'
 import Edit from './component/Edit'
-
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 
 class App extends React.Component {
 
   state = {
+    loading: true,
     username: "",
     password: "",
     email: "",
@@ -41,7 +42,8 @@ fetch('http://localhost:3050/games')
 .then(res => res.json()
 ).then(response=> {
   this.setState({
-     allGames: response
+     allGames: response,
+     loading: false
   })
 })
 
@@ -192,11 +194,19 @@ return res.json()
 }
 
   render () {
-    const { filter, allGames, userData, username, password, confirmPass } = this.state
+    const { loading, filter, allGames, userData, username, password, confirmPass } = this.state
   return (
 
      <div>
-     <Navbar logout={this.logOut}loggedIn={userData}/>
+      <Navbar logout={this.logOut}loggedIn={userData}/>
+     {loading ? 
+
+      <Dimmer active>
+        <Loader size='massive'>Loading</Loader>
+      </Dimmer>
+     :
+
+    
      <Switch>
      <Route path="/register" render={()=> {return !userData ?
      <Register 
@@ -218,7 +228,7 @@ return res.json()
       <Route path="/" component={Home} />
        
 
-      </Switch>
+      </Switch>}
    
     </div>
 
