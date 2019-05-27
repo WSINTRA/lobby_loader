@@ -25,6 +25,10 @@ class App extends React.Component {
     selectedGame: "",
     pageIndex: 0,
   }
+
+
+  ///////////////
+
  //////////////
  pageIndexRight=()=>{
   this.setState(prevState=>{
@@ -42,12 +46,52 @@ class App extends React.Component {
   
  }
  ///////////////////////
- removeGameFromProfile = (props) => {
-  console.log("Remove game from the user profile")
+ removeGameFromProfile = (game) => {
+   let user = this.state.userData
+   let testForGame = user.games.map(g => g.id === game.id)
+   if (testForGame.includes(true)) 
+    {
+     fetch(`http://localhost:3050/removeGame`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+    game: game,
+    user: user
+  })
+}).then(res => res.json() )
+ .then(user => this.setState({
+  userData: user
+ }))
+}
+   else {
+    console.log("game not in collection")
+   }
  }
+ 
+ 
  ///////////////////////
- addGameToProfile = (props) => {
-  console.log("Add game to the user profile")
+ addGameToProfile = (game) => {
+  let user = this.state.userData
+  console.log(game)
+ fetch(`http://localhost:3050/addGame`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+    game: game,
+    user: user
+  })
+}).then(res => res.json() )
+ .then(user => this.setState({
+  userData: user
+ }))
  }
   ///////////////////////
   onGameClick = (props) => {
@@ -274,7 +318,9 @@ return res.json()
         }} />
       <Route path="/parties" component={Parties} />
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
-      <Route path="/profile" render={()=>{return <Profile userData={userData}/>} } />
+      <Route path="/profile" render={()=>{return <Profile 
+        removeGameFromProfile={this.removeGameFromProfile}
+        userData={userData}/>} } />
       <Route path="/" component={Home} />
        
 

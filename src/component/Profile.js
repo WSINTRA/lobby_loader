@@ -1,12 +1,11 @@
 import React from 'react'
-import { Grid, Container,  Image } from 'semantic-ui-react'
+import { Grid, Container,  Image, Icon, Divider, Popup } from 'semantic-ui-react'
 import {Link,  Redirect } from 'react-router-dom'
 
 
 function Profile(props) {
-console.log(props)
 return (
-  <fragment>
+  <React.Fragment>
   {props.userData ? <Container>
    <Grid celled>
     <Grid.Row>
@@ -26,6 +25,18 @@ return (
       </Grid.Column>
       <Grid.Column width={10}>
         <h3>Games in your collection</h3>
+        {props.userData.games.map(game => <React.Fragment key={game.id}>
+          <h4>{game.name}</h4>
+         <Popup content='Remove game from profile' trigger={<Icon size="big"
+      name="thumbs down outline"
+      onClick={()=>props.removeGameFromProfile({...game})}/>} />
+          
+             <Popup content='Create a new party for this game' trigger={ 
+              <Icon size="big"
+              name='group' />} />
+     
+      <Divider/>
+          </React.Fragment> )}
       </Grid.Column>
       <Grid.Column width={3}>
         <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
@@ -34,7 +45,7 @@ return (
   </Grid>
    </Container> : <Redirect from="/profile" to="/login" />}
 	
-	</fragment>
+	</React.Fragment>
 	);
 }
 
