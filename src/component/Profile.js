@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Container, Header, Image } from 'semantic-ui-react'
-import {Link, NavLink, Redirect } from 'react-router-dom'
+import { Grid, Container,  Image } from 'semantic-ui-react'
+import {Link,  Redirect } from 'react-router-dom'
 
 
 function Profile(props) {

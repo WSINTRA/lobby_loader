@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button, Input, Divider, Icon, Grid, Segment } from 'semantic-ui-react'
+import { Container, Button, Input, Icon, Grid, Segment } from 'semantic-ui-react'
 
 function Register(props) {
 
