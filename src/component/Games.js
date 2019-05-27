@@ -15,23 +15,33 @@ return (
   </Grid.Column>
     
     <Grid.Column width={10}>
+    
     <h1>GAMES </h1>
     <h4 style={{cursor:"pointer", float: "left"}} 
-    onClick={()=>console.log("Make another ten appear")}>prev page
+    onClick={()=>props.pageIndexLeft(props.pageIndex)}>prev page
     <Icon name="arrow alternate circle left outline"/>
     </h4>
     
     <h4 style={{cursor:"pointer", float: "right"}} 
-    onClick={()=>console.log("Make another ten appear")}>next page
+    onClick={()=>props.pageIndexRight(props.pageIndex)}>next page
     <Icon name="arrow alternate circle right outline"/>
     </h4>
     <div className="fluid-column">
-    {props.allGames.slice(0, 10).map(game => <GameCard 
+    {props.allGames.slice(props.pageIndex, props.pageIndex + 10).map(game => <GameCard 
       key={game.id}
       onGameClick={props.onGameClick}
       game={game} /> ) 
       }
     </div>
+    <h4 style={{cursor:"pointer", float: "left"}} 
+    onClick={()=>props.pageIndexLeft(props.pageIndex)}>prev page
+    <Icon name="arrow alternate circle left outline"/>
+    </h4>
+    
+    <h4 style={{cursor:"pointer", float: "right"}} 
+    onClick={()=>props.pageIndexRight(props.pageIndex)}>next page
+    <Icon name="arrow alternate circle right outline"/>
+    </h4>
     </Grid.Column>
     <Grid.Column width={1}>
     <div className="add-game"><Icon name="save outline"/><strong>Game Collection</strong><br/> <br/>
