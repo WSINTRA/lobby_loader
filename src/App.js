@@ -23,8 +23,24 @@ class App extends React.Component {
     allGames: [],
     filter: "",
     selectedGame: "",
+    pageIndex: 0,
   }
-
+ //////////////
+ pageIndexRight=()=>{
+  this.setState(prevState=>{
+    return{ pageIndex: (prevState.pageIndex + 10)}
+  })
+ }
+ /////////////
+ pageIndexLeft=()=>{
+  if (this.state.pageIndex === 0 )
+    return null
+  else
+  this.setState(prevState=>{
+    return{ pageIndex: (prevState.pageIndex - 10)}
+  })
+  
+ }
  ///////////////////////
  removeGameFromProfile = (props) => {
   console.log("Remove game from the user profile")
@@ -216,6 +232,7 @@ return res.json()
       userData, 
       username, 
       password, 
+      pageIndex,
       confirmPass } = this.state
   return (
 
@@ -250,7 +267,10 @@ return res.json()
         onGameClick={this.onGameClick}
         selectedGame={selectedGame}
         addGameToProfile={this.addGameToProfile}
-        removeGameFromProfile={this.removeGameFromProfile}/>
+        removeGameFromProfile={this.removeGameFromProfile}
+        pageIndex={pageIndex}
+        pageIndexLeft={this.pageIndexLeft}
+        pageIndexRight={this.pageIndexRight}/>
         }} />
       <Route path="/parties" component={Parties} />
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
