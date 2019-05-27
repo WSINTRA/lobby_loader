@@ -27,11 +27,15 @@ return (
     <Icon name="arrow alternate circle right outline"/>
     </h4>
     <div className="fluid-column">
-    {props.allGames.slice(props.pageIndex, props.pageIndex + 10).map(game => <GameCard 
+    {props.allGames.length < 20 ? props.allGames.map(game => 
+      <GameCard 
       key={game.id}
       onGameClick={props.onGameClick}
-      game={game} /> ) 
-      }
+      game={game} />) : props.allGames.slice(props.pageIndex, props.pageIndex + 10).map(game => <GameCard 
+      key={game.id}
+      onGameClick={props.onGameClick}
+      game={game} /> )  }
+   
     </div>
     <h4 style={{cursor:"pointer", float: "left"}} 
     onClick={()=>props.pageIndexLeft(props.pageIndex)}>prev page
@@ -62,3 +66,10 @@ return (
 }
 
 export default Games;
+
+
+ // {props.allGames.slice(props.pageIndex, props.pageIndex + 10).map(game => <GameCard 
+    //   key={game.id}
+    //   onGameClick={props.onGameClick}
+    //   game={game} /> ) 
+    //   }
