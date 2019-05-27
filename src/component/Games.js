@@ -1,11 +1,11 @@
 import React from 'react'
 import GameCard from './GameCard'
-import { Input, Label, Menu, Grid } from 'semantic-ui-react'
+import { Icon, Input, Menu, Grid } from 'semantic-ui-react'
 
 function Games(props) {
-let random = Math.floor( Math.random() * props.allGames.length - 30 )
+
 return (
-    <Grid columns={2} relaxed='very'divided>
+    <Grid columns={3} relaxed='very'divided>
     <Grid.Column width={3}>
     <Menu vertical>
     <Menu.Item>
@@ -14,14 +14,38 @@ return (
   </Menu>
   </Grid.Column>
     
-    <Grid.Column>
+    <Grid.Column width={10}>
     <h1>GAMES </h1>
-    <div className="ui grid three column grid">
-    {props.allGames.length < 20 ? 
-    props.allGames.map(game => <GameCard game={game} /> )  :
-    props.allGames.slice(random, random + 30).map(game => <GameCard game={game} /> ) 
+    <h4 style={{cursor:"pointer", float: "left"}} 
+    onClick={()=>console.log("Make another ten appear")}>prev page
+    <Icon name="arrow alternate circle left outline"/>
+    </h4>
+    
+    <h4 style={{cursor:"pointer", float: "right"}} 
+    onClick={()=>console.log("Make another ten appear")}>next page
+    <Icon name="arrow alternate circle right outline"/>
+    </h4>
+    <div className="fluid-column">
+    {props.allGames.slice(0, 10).map(game => <GameCard 
+      key={game.id}
+      onGameClick={props.onGameClick}
+      game={game} /> ) 
       }
     </div>
+    </Grid.Column>
+    <Grid.Column width={1}>
+    <div className="add-game"><Icon name="save outline"/><strong>Game Collection</strong><br/> <br/>
+    {props.selectedGame.name ? 
+      <React.Fragment>{props.selectedGame.name}<br/> 
+      <Icon size="big"
+      name="thumbs up outline"
+      onClick={()=>props.addGameToProfile(props.selectedGame)}/>   
+        <Icon size="big"
+      name="thumbs down outline"
+      onClick={()=>props.removeGameFromProfile(props.selectedGame)}/><br/><br/>
+      <Icon name="group"/><strong>Current Parties</strong>
+    {/**Show current parties here **/}
+      </React.Fragment> : null} </div>
     </Grid.Column>
     </Grid>
 	);

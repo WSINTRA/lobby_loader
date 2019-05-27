@@ -22,18 +22,30 @@
 .App-link {
   color: #61dafb;
 }
+.add-game {
+  position: fixed;
+  font-size: 1.3em;
+}
+.fluid-column {
+  column-width: 100vw;
+}
+.game-card-info {
+  column-width: 100vw;
+  border: 0.5em solid hsla(120,100%,25%,0.3);
+  background: yellowgreen;
+/*  background-clip: padding-box;*/
+/*  background: linear-gradient(-45deg, transparent 15px, yellowgreen 0);*/
+border-radius: 1em;
+cursor: pointer;
+}
+.game-card-info:hover {
+    background: linear-gradient(-45deg, transparent 15px, yellowgreen 0);
+}
 
 .equal {
-
-    width:  200px;
-    height: 200px;
+    float: left;
+    width:  10em;
+    height: 10em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+

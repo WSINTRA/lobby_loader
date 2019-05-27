@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
-import logo from './logo.svg';
 import './App.css';
 import Login from './component/Login'
 import Register from './component/Register'
@@ -10,7 +9,7 @@ import Profile from './component/Profile'
 import Games from './component/Games'
 import Parties from './component/Parties'
 import Edit from './component/Edit'
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 class App extends React.Component {
 
@@ -23,6 +22,22 @@ class App extends React.Component {
     userData: null,
     allGames: [],
     filter: "",
+    selectedGame: "",
+  }
+
+ ///////////////////////
+ removeGameFromProfile = (props) => {
+  console.log("Remove game from the user profile")
+ }
+ ///////////////////////
+ addGameToProfile = (props) => {
+  console.log("Add game to the user profile")
+ }
+  ///////////////////////
+  onGameClick = (props) => {
+  this.setState({
+    selectedGame: props
+  })
   }
   ///////////////////////
    filterChange = (e) => {
@@ -194,7 +209,14 @@ return res.json()
 }
 
   render () {
-    const { loading, filter, allGames, userData, username, password, confirmPass } = this.state
+    const { 
+      selectedGame, 
+      loading, 
+      filter,  
+      userData, 
+      username, 
+      password, 
+      confirmPass } = this.state
   return (
 
      <div>
@@ -221,7 +243,15 @@ return res.json()
       loginFormControl={this.registerFormControl}
       username={username}  
       password={password} />} />
-      <Route path="/games" render={()=>{return <Games filterChange={this.filterChange}filterValue={filter}allGames={this.filterByGame(filter)} />}} />
+      <Route path="/games" render={()=>{return <Games 
+        filterChange={this.filterChange}
+        filterValue={filter}
+        allGames={this.filterByGame(filter)} 
+        onGameClick={this.onGameClick}
+        selectedGame={selectedGame}
+        addGameToProfile={this.addGameToProfile}
+        removeGameFromProfile={this.removeGameFromProfile}/>
+        }} />
       <Route path="/parties" component={Parties} />
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
       <Route path="/profile" render={()=>{return <Profile userData={userData}/>} } />
