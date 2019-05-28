@@ -336,7 +336,7 @@ class App extends React.Component {
       loginFormControl={this.registerFormControl}
       username={username}  
       password={password} />} />
-      <Route path="/games" render={()=>{return <Games 
+      <Route path="/games" render={()=>{return <GamesContainer
         filterChange={this.filterChange}
         filterValue={filter}
         allGames={this.filterByGame(filter)} 
