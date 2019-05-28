@@ -1,11 +1,17 @@
 import React from "react";
 import GameCard from "./GameCard";
+import Games from "./Games"
 import StackGrid from "react-stack-grid";
+import GameShow from "./GameShow"
 import { Icon, Input, Menu, Grid } from "semantic-ui-react";
 
-class Games extends React.Component {
+class GamesContainer extends React.Component {
 
 
+  state = {
+    gameInfo: {},
+    gameView: false
+  }
 
   previousPage = () => {
     return <h4 style={{ cursor: "pointer", float: "left" }} onClick={() => this.props.pageIndexLeft()} >
@@ -23,11 +29,36 @@ class Games extends React.Component {
         </h4>
   }
 
+  viewGame = (game) => {
+    // console.log(game)
+    this.setState(prevState=>{
+      return {
+        gameInfo: game,
+        gameView: !prevState.gameView
+      }
+    })
+  }
+
+  goBack = () => {
+    this.setState(prevState=>{
+      return {
+        gameInfo: {},
+        gameView: !prevState.gameView
+      }
+    })
+  }
+
+  addCurrentGame = () => {
+    this.props.addGameToProfile(this.state.gameInfo)
+  }
+
   render() {
+    console.log(this.state)
   return (
       <React.Fragment>
 
-          <div className="mySearch">
+          {this.state.gameView ? null :
+            <div className="mySearch">
             <h1>GAMES</h1>
             {this.previousPage()}
             <Input
@@ -38,67 +69,19 @@ class Games extends React.Component {
               placeholder="Filter by name..."
             />
             {this.nextPage()}
-            </div>
+            </div>}
  
-        <StackGrid columnWidth={150}>
-        {/*<div className="ui link cards fluid">*/}
-          {this.props.allGames.length < 20
-            ? this.props.allGames.map((game, idx) => (
-              <div key={idx}>
-                <GameCard
-                  key={game.id}
-                  onGameClick={this.props.onGameClick}
-                  game={game}
-                />
-                </div>
-              ))
-            : this.props.allGames
-                .slice(this.props.pageIndex, this.props.pageIndex + 10)
-                .map((game, idx) => (
-                  <div key={idx}>
-                  <GameCard
-                    key={game.id}
-                    onGameClick={this.props.onGameClick}
-                    game={game}
-                  />
-                  </div>
-                ))}
-        {/*</div>*/}
-        </StackGrid>
 
-        <div className="add-game">
-          <Icon name="save outline" />
-          <strong>Game Collection</strong>
-          <br /> <br />
-          {this.props.selectedGame.name ? (
-            <React.Fragment>
-              {this.props.selectedGame.name}
-              <br />
-              <Icon
-                size="big"
-                name="thumbs up outline"
-                onClick={() => this.props.addGameToProfile(this.props.selectedGame)}
-              />
-              <Icon
-                size="big"
-                name="thumbs down outline"
-                onClick={() => this.props.removeGameFromProfile(this.props.selectedGame)}
-              />
-              <br />
-              <br />
-              <Icon name="group" />
-              <strong>Current Parties</strong>
-              {/**Show current parties here **/}
-            </React.Fragment>
-          ) : null}{" "}
-        </div>
+
+          {this.state.gameView ? <GameShow {...this.state.gameInfo} goBack={this.goBack} onAdd={this.addCurrentGame} />: <Games {...this.props} onClick={this.viewGame}/>}
+
         </React.Fragment>
 
   );
 }
 }
 
-export default Games;
+export default GamesContainer;
 
 // {this.props.allGames.slice(this.props.pageIndex, this.props.pageIndex + 10).map(game => <GameCard
 //   key={game.id}
