@@ -28,9 +28,39 @@ class App extends React.Component {
     partyName: "",
     partySize: 0,
     partyDescription: "",
+    allParties: [],
+    sideBarVisible: false,
+    userParties: [],
   }
+  leaveGroup = () => {
+    console.log("Leave this party")
+  }
+  ///////////////
+  joinGroup = (party, userId) => {
+    console.log("Join userID",userId, "to party",party)
+    fetch(`http://localhost:3050/addUser`, {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+    party_id: party.id,
+    user_id: userId,
+  })
+ }).then(res => res.json() )
+ .then(response => this.setState(prevState=>{ 
+  return {
+        userParties: [...prevState.userParties, response.party]
+         }
+        }
+       )
+ )
 
-
+  }
+  handleSidebarHide = () => this.setState({ sideBarVisible: false })
+  handleHideClick = () => this.setState({ sideBarVisible: false })
+  handleShowClick = () => this.setState({ sideBarVisible: true })
   ///////////////
   handleModalOpen = () => this.setState({ modalOpen: true })
 
@@ -38,6 +68,7 @@ class App extends React.Component {
    this.setState({ modalOpen: false })
    console.log("Form will be submitted with this game", game)
    console.log("new user party", user, game)
+   //Now creates a new party
  fetch(`http://localhost:3050/parties`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json',
@@ -52,8 +83,11 @@ class App extends React.Component {
     partyDescription: this.state.partyDescription,
   })
  }).then(res => res.json() )
- .then(user => this.setState({
-  userData: user
+ .then(user => this.setState(prevState=>{return{
+  userData: user,
+  allParties: [...prevState.allParties, {...user.owned_parties}]
+ }
+  
  }))
 }
 
@@ -124,7 +158,8 @@ class App extends React.Component {
       .then(res => res.json())
       .then(user =>
         this.setState({
-          userData: user
+          userData: user,
+
         })
       );
   };
@@ -172,11 +207,20 @@ class App extends React.Component {
 
         return res.json().then(res =>
           this.setState({
-            userData: res.user
+            userData: res.user,
+            userParties: res.user.parties
           })
         );
       });
     }
+
+    fetch("http://localhost:3050/parties")
+    .then(res => res.json())
+    .then(response=> {
+      this.setState({
+        allParties:response
+      })
+    })
   }
   //////////////////////////
   logOut = () => {
@@ -310,6 +354,9 @@ class App extends React.Component {
       partyDescription,
       partyName,
       partySize,
+      allParties,
+      userParties,
+      sideBarVisible,
       confirmPass } = this.state
   return (
 
@@ -321,8 +368,6 @@ class App extends React.Component {
         <Loader size='massive'>Loading</Loader>
       </Dimmer>
      :
-
-    
      <Switch>
      <Route path="/register" render={()=> {return !userData ?
      <Register 
@@ -349,7 +394,21 @@ class App extends React.Component {
         pageIndexLeft={this.pageIndexLeft}
         pageIndexRight={this.pageIndexRight}/>
         }} />
-      <Route path="/parties" component={Parties} />
+      <Route path="/parties" render={()=> {return userData ? <Parties 
+        leaveGroup={this.leaveGroup}
+        joinGroup={this.joinGroup}
+        sideBarVisible={sideBarVisible}
+        handleShowClick={this.handleShowClick}
+        handleSidebarHide={this.handleSidebarHide}
+        handleHideClick={this.handleHideClick}
+        allParties={allParties}
+        currentUserId={userData.id} 
+        currentUserParties={userParties}
+        currenUserOwnedParties={userData.owned_parties} 
+        allParties={allParties} 
+         /> : <Redirect from="/parties" to="/login" />}}/>
+        }
+         }/>
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
       <Route path="/profile" render={()=>{return <Profile 
         registerFormControl={this.registerFormControl}
