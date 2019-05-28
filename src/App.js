@@ -22,10 +22,42 @@ class App extends React.Component {
     allGames: [],
     filter: "",
     selectedGame: "",
-    pageIndex: 0
-  };
+    pageIndex: 0,
+    createParty: "",
+    modalOpen: false,
+    partyName: "",
+    partySize: 0,
+    partyDescription: "",
+  }
+
 
   ///////////////
+  handleModalOpen = () => this.setState({ modalOpen: true })
+
+  handleModalClose = (user, game) => {
+   this.setState({ modalOpen: false })
+   console.log("Form will be submitted with this game", game)
+   console.log("new user party", user, game)
+ fetch(`http://localhost:3050/parties`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+    gameId: game.id,
+    userId: user.id,
+    partySize: this.state.partySize,
+    partyName: this.state.partyName,
+    partyDescription: this.state.partyDescription,
+  })
+ }).then(res => res.json() )
+ .then(user => this.setState({
+  userData: user
+ }))
+}
+
+
 
   //////////////
   pageIndexRight = () => {
@@ -34,6 +66,7 @@ class App extends React.Component {
     });
   };
   /////////////
+
   pageIndexLeft = () => {
     if (this.state.pageIndex === 0) return null;
     else
@@ -41,7 +74,10 @@ class App extends React.Component {
         return { pageIndex: prevState.pageIndex - 10 };
       });
   };
-  ///////////////////////
+
+
+ ////////////////////////
+
   removeGameFromProfile = game => {
     let user = this.state.userData;
     let testForGame = user.games.map(g => g.id === game.id);
@@ -268,95 +304,73 @@ class App extends React.Component {
       username,
       password,
       pageIndex,
-      confirmPass
-    } = this.state;
-    return (
-      <div>
-        <Navbar logout={this.logOut} loggedIn={userData} />
-        {loading ? (
-          <Dimmer active>
-            <Loader size="massive">Loading</Loader>
-          </Dimmer>
-        ) : (
-          <Switch>
-            <Route
-              path="/register"
-              render={() => {
-                return !userData ? (
-                  <Register
-                    submit={this.onRegisterFormSubmit}
-                    registerFormControl={this.registerFormControl}
-                    username={username}
-                    confirmPassword={confirmPass}
-                    password={password}
-                  />
-                ) : (
-                  <Redirect from="/register" to="/" />
-                );
-              }}
-            />
-            <Route
-              path="/login"
-              render={() => (
-                <Login
-                  loggedIn={userData}
-                  submit={this.loginSubmit}
-                  loginFormControl={this.registerFormControl}
-                  username={username}
-                  password={password}
-                />
-              )}
-            />
-            <Route
-              path="/games"
-              render={() => {
-                return (
-                  <GamesContainer
-                    filterChange={this.filterChange}
-                    filterValue={filter}
-                    allGames={this.filterByGame(filter)}
-                    onGameClick={this.onGameClick}
-                    selectedGame={selectedGame}
-                    addGameToProfile={this.addGameToProfile}
-                    removeGameFromProfile={this.removeGameFromProfile}
-                    pageIndex={pageIndex}
-                    pageIndexLeft={this.pageIndexLeft}
-                    pageIndexRight={this.pageIndexRight}
-                  />
-                );
-              }}
-            />
-            <Route path="/parties" component={Parties} />
-            <Route
-              path="/edit"
-              render={() => {
-                return (
-                  <Edit
-                    formControl={this.formControl}
-                    userData={userData}
-                    loggedIn={userData}
-                    handleEdit={this.editSubmit}
-                  />
-                );
-              }}
-            />
-            <Route
-              path="/profile"
-              render={() => {
-                return (
-                  <Profile
-                    removeGameFromProfile={this.removeGameFromProfile}
-                    userData={userData}
-                  />
-                );
-              }}
-            />
-            <Route path="/" component={Home} />
-          </Switch>
-        )}
-      </div>
-    );
-  }
+      modalOpen,
+      createParty,
+      partyDescription,
+      partyName,
+      partySize,
+      confirmPass } = this.state
+  return (
+
+     <div>
+      <Navbar logout={this.logOut}loggedIn={userData}/>
+     {loading ? 
+
+      <Dimmer active>
+        <Loader size='massive'>Loading</Loader>
+      </Dimmer>
+     :
+
+    
+     <Switch>
+     <Route path="/register" render={()=> {return !userData ?
+     <Register 
+      submit={this.onRegisterFormSubmit}
+      registerFormControl={this.registerFormControl}
+      username={username} 
+      confirmPassword={confirmPass}
+      password={password} /> : <Redirect from="/register" to="/" />}}/>
+      <Route path="/login" render={()=> <Login 
+      loggedIn={userData}
+      submit={this.loginSubmit}
+      loginFormControl={this.registerFormControl}
+      username={username}  
+      password={password} />} />
+      <Route path="/games" render={()=>{return <Games 
+        filterChange={this.filterChange}
+        filterValue={filter}
+        allGames={this.filterByGame(filter)} 
+        onGameClick={this.onGameClick}
+        selectedGame={selectedGame}
+        addGameToProfile={this.addGameToProfile}
+        removeGameFromProfile={this.removeGameFromProfile}
+        pageIndex={pageIndex}
+        pageIndexLeft={this.pageIndexLeft}
+        pageIndexRight={this.pageIndexRight}/>
+        }} />
+      <Route path="/parties" component={Parties} />
+      <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
+      <Route path="/profile" render={()=>{return <Profile 
+        registerFormControl={this.registerFormControl}
+        partyName={partyName}
+        partySize={partySize}
+        partyDescription={partyDescription}
+        createNewUserParty={this.createNewUserParty}
+        handleModalOpen={this.handleModalOpen}
+        handleModalClose={this.handleModalClose}
+        modalOpen={modalOpen}
+        createPartyName={createParty}
+        removeGameFromProfile={this.removeGameFromProfile}
+        userData={userData}/>} } />
+      <Route path="/" component={Home} />
+       
+
+      </Switch>}
+   
+    </div>
+
+    )}
+  
 }
 
 export default withRouter(App);
