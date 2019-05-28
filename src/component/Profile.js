@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Header, Form, Modal,Button, Grid, Container,  Image, Icon, Divider, Popup } from 'semantic-ui-react'
 import {Link,  Redirect } from 'react-router-dom'
@@ -97,4 +98,5 @@ export default Profile;
  //              <Icon size="big"
  //              name='group' 
  //              onClick={()=>props.createNewUserParty(props.userData, {...game})}/>} />
+
 
