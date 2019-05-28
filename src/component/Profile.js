@@ -1,9 +1,12 @@
 import React from 'react'
-import { Grid, Container,  Image, Icon, Divider, Popup } from 'semantic-ui-react'
+import { Header, Form, Modal,Button, Grid, Container,  Image, Icon, Divider, Popup } from 'semantic-ui-react'
 import {Link,  Redirect } from 'react-router-dom'
 
 
 function Profile(props) {
+
+
+
 return (
   <React.Fragment>
   {props.userData ? <Container>
@@ -27,19 +30,51 @@ return (
         <h3>Games in your collection</h3>
         {props.userData.games.map(game => <React.Fragment key={game.id}>
           <h4>{game.name}</h4>
-         <Popup content='Remove game from profile' trigger={<Icon size="big"
-      name="thumbs down outline"
-      onClick={()=>props.removeGameFromProfile({...game})}/>} />
           
-             <Popup content='Create a new party for this game' trigger={ 
-              <Icon size="big"
-              name='group' />} />
-     
+        <Modal
+        trigger={<Button onClick={props.handleModalOpen}>Create New Party</Button>}
+        open={props.modalOpen}
+        onClose={props.handleModalClose}
+        basic
+        size='small'
+      >
+        <Header icon='group' content='New Party Time !' />
+        <Modal.Content>
+           <Form>
+    <Form.Field>
+      <label>Name</label>
+      <input name="partyName"placeholder='Party Name' onChange={(e)=>props.registerFormControl(e)}value={props.partyName}/>
+    </Form.Field>
+     <Form.Field>
+      <label>Size</label>
+      <input name="partySize"placeholder='Party Size' onChange={(e)=>props.registerFormControl(e)} value={props.partySize}/>
+    </Form.Field>
+     <Form.Field>
+      <label>Description</label>
+      <input name="partyDescription"placeholder='Party Description' onChange={(e)=>props.registerFormControl(e)} value={props.partyDescription} />
+    </Form.Field>
+  </Form>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color='green' onClick={()=>props.handleModalClose(props.userData,{...game})} inverted>
+            <Icon name='checkmark' /> Got it
+          </Button>
+        </Modal.Actions>
+      </Modal>
+      
       <Divider/>
           </React.Fragment> )}
       </Grid.Column>
       <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+         <Icon size="big"
+              name='group' /> Parties I own
+              {props.userData.owned_parties.map(party => 
+                <h4>{party.name}</h4>)}
+               <Divider/>
+               <Icon size="big"
+              name='group' /> Parties I'm in'
+              {props.userData.parties.map(party => 
+                <h4>{party.name}</h4>)}
       </Grid.Column>
     </Grid.Row>
   </Grid>
@@ -49,4 +84,17 @@ return (
 	);
 }
 
+
 export default Profile;
+
+
+ // <Popup content='Remove game from profile' trigger={<Icon size="big"
+ //      name="thumbs down outline"
+ //      onClick={()=>props.removeGameFromProfile({...game})}/>} />
+          
+ //             <Popup content='Create a new party for this game' trigger={ 
+              
+ //              <Icon size="big"
+ //              name='group' 
+ //              onClick={()=>props.createNewUserParty(props.userData, {...game})}/>} />
+
