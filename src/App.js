@@ -24,10 +24,40 @@ class App extends React.Component {
     filter: "",
     selectedGame: "",
     pageIndex: 0,
+    createParty: "",
+    modalOpen: false,
+    partyName: "",
+    partySize: 0,
+    partyDescription: "",
   }
 
 
   ///////////////
+  handleModalOpen = () => this.setState({ modalOpen: true })
+
+  handleModalClose = (user, game) => {
+   this.setState({ modalOpen: false })
+   console.log("Form will be submitted with this game", game)
+   console.log("new user party", user, game)
+ fetch(`http://localhost:3050/parties`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+    gameId: game.id,
+    userId: user.id,
+    partySize: this.state.partySize,
+    partyName: this.state.partyName,
+    partyDescription: this.state.partyDescription,
+  })
+ }).then(res => res.json() )
+ .then(user => this.setState({
+  userData: user
+ }))
+}
+
 
  //////////////
  pageIndexRight=()=>{
@@ -45,6 +75,13 @@ class App extends React.Component {
   })
   
  }
+
+ ////////////////////////
+ createNewUserParty = (user, game) => {
+ 
+
+ }
+
  ///////////////////////
  removeGameFromProfile = (game) => {
    let user = this.state.userData
@@ -277,6 +314,11 @@ return res.json()
       username, 
       password, 
       pageIndex,
+      modalOpen,
+      createParty,
+      partyDescription,
+      partyName,
+      partySize,
       confirmPass } = this.state
   return (
 
@@ -319,6 +361,15 @@ return res.json()
       <Route path="/parties" component={Parties} />
       <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
       <Route path="/profile" render={()=>{return <Profile 
+        registerFormControl={this.registerFormControl}
+        partyName={partyName}
+        partySize={partySize}
+        partyDescription={partyDescription}
+        createNewUserParty={this.createNewUserParty}
+        handleModalOpen={this.handleModalOpen}
+        handleModalClose={this.handleModalClose}
+        modalOpen={modalOpen}
+        createPartyName={createParty}
         removeGameFromProfile={this.removeGameFromProfile}
         userData={userData}/>} } />
       <Route path="/" component={Home} />
