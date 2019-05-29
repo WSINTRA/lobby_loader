@@ -7,6 +7,8 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-stack-grid": "^0.7.1",
+    "semantic-ui-carousel-react": "^1.0.4",
     "semantic-ui-react": "^0.87.1"
   },
   "scripts": {
