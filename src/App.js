@@ -252,6 +252,7 @@ class App extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
   /////////////////////////
+
     editSubmit = user => {
         fetch(`http://localhost:3050/users/${user.id}`, {
             method: "PATCH",
@@ -266,6 +267,7 @@ class App extends React.Component {
         }).then(res => res.json())
             .then(() => this.props.history.push("/profile"))
     }
+
 
     formControl = event => {
         let attribute = event.target.name

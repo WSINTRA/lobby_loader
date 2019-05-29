@@ -1,10 +1,11 @@
 import React from 'react'
+import home from '../home.png'
 
 function Home(props) {
 
 return (
-    <div> 
-    <h1> CREATE LANDING PAGE </h1>
+    <div className="home"> 
+    <img alt="Lobby Loader" src={home} />
     
 
     </div>

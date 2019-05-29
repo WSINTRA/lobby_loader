@@ -5,7 +5,7 @@ function Parties(props) {
 
 return (
     <div> <Container>
-    
+    <Segment>
     <Button.Group>
           <Button disabled={props.sideBarVisible} onClick={props.handleShowClick}>
             Show Options
@@ -17,7 +17,7 @@ return (
    <Grid >
     <Grid.Row columns={2}>
      <Grid.Column>
-        <Segment>
+        
         <Header>Parties I own</Header>
         <Container>
         {props.currentUserOwnedParties.map(party => 
@@ -54,10 +54,10 @@ return (
     </Sidebar.Pushable>
     </React.Fragment>)}
         </Container>
-      </Segment>
+     
     </Grid.Column>
     <Grid.Column>
-      <Segment>
+      
         <Header>Parties I'm in</Header>
         <Container>
         {
@@ -96,16 +96,16 @@ return (
     </React.Fragment>
   ) }
         </Container>
-      </Segment>
+      
     </Grid.Column>
     </Grid.Row>
-    <Grid.Row columns={4}>
+    <Grid.Row columns={1}>
      
-      <Segment>
+    
       <Grid.Column>
         <Header>Available Parties</Header>
-        <Container>
-        <StackGrid >
+        
+        <StackGrid columnWidth={250}>
          {props.allParties.map(party => 
             <React.Fragment key={party.id}>
         
@@ -146,11 +146,12 @@ return (
     </Sidebar.Pushable>
     </React.Fragment>
     )}</StackGrid>
-        </Container>
+        
         </Grid.Column>
-      </Segment>
+     
     </Grid.Row>
   </Grid>
+  </Segment>
    </Container>
     </div>
 	);

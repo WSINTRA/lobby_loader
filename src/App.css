@@ -7,6 +7,70 @@
   height: 40vmin;
   pointer-events: none;
 }
+.ui.buttons .button{
+  background: rgb(9,79,53);
+}
+.ui.buttons:not(.basic):not(.inverted) {
+  background: rgb(9,79,53);
+}
+.ui.card{
+background: #8cc6b0;
+}
+
+.home img {
+   max-width: 100%;
+  height: auto;
+}
+body {
+  background: rgb(141,198,176); 
+  color: rgb(0, 40,  25  );
+  background-image: url(Background.png);
+  background-size: cover;
+}
+a {
+    color: rgb(26,37,33);
+    text-decoration: none;
+}
+.ui.segment {
+  box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+  border: 3px rgba(34,36,38,0.2);
+  border-radius: .01rem; 
+}
+.ui.celled.grid {
+    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+}
+.ui.celled.grid>.row>.column:first-child {
+    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+}
+.ui.celled.grid>.row>.column {
+    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+}
+/*.ui.celled.grid>.row>.column {
+    box-shadow: inset -20px 0px 9px 0px #8cc6b0;
+}*/
+
+.ui.celled.grid>.row{
+  box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+}
+.container {
+    background: rgb(37, 117, 86);
+}
+.ui.icon.menu .item {
+    height: auto;
+    text-align: center;
+    color: #ffffff;
+}
+.ui.labeled.icon.menu {
+background: rgba(9,79,53,0.9);
+}
+.ui.labeled.icon.menu a {
+
+color: #f1f1f1;
+
+}
+.ui.segment{
+ background:  rgb(37,117,86);
+}
 
 .App-header {
   background-color: #282c34;
