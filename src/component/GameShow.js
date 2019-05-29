@@ -17,24 +17,38 @@ function GameShow(props) {
 
 	const getGenres = () => {
 		return props.genres.map(genre => {
-			return <li>{genre.name}</li>
+			return <Segment inverted color="red" tertiary textAlign="center">{genre.name}</Segment>
 		})
 	}
 	const getKeywords = () => {
 		return props.keywords.map(keyword => {
-			return <li>{keyword.name}</li>
+			return <Segment inverted color="brown" tertiary textAlign="center">{keyword.name}</Segment>
 		})
 	}
 	const getPlatforms = () => {
 		return props.platforms.map(platform => {
-			return <li>{platform.name}</li>
+			return <Segment inverted color="blue" tertiary textAlign="center">{platform.name}</Segment>
 		})
 	}	
 	const getModes = () => {
 		return props.modes.map(mode => {
-			return <li>{mode.name}</li>
+			return <Segment inverted color="green" tertiary textAlign="center">{mode.name}</Segment>
 		})
 	}
+	const getParties = () => {
+		if(props.parties.length === 0){
+			return null
+		} else{
+		return props.parties.map(party => {
+			return <Segment.Group> 
+					<Segment inverted color="green" tertiary textAlign="center">{party.name}</Segment>
+					<Segment inverted color="green" tertiary textAlign="center">{party.description}</Segment>
+					</Segment.Group>
+
+		})
+		}
+	}
+
 
 
 	// let elemant = [{
@@ -51,53 +65,62 @@ function GameShow(props) {
 
 	return (
 		<React.Fragment>
-		<div className="mySearch">
-            <h1>{props.name}</h1>
-            </div>
-		<Grid columns='2'>
+		<Grid celled>
 			<Grid.Row>
-				<Grid.Column>
-					<Segment>
-						<img style={{width: "100%", height: "100%"}}src={props.coverimages[0].original_url}/>
+				<Grid.Column width={16} centered>
+					<Segment vertical size="massive" textAlign="center" inverted color="black" tertiary> 
+					<Button onClick={props.onAdd}> Add Game </Button>
+					{props.name}
+					<Button onClick={props.goBack}> GO BACK </Button>
+					</Segment>
+				</Grid.Column>
+			</Grid.Row>
+			<Grid.Row>
+				<Grid.Column width={6} centered>
+					<Segment vertical centered>
+						<Image size='huge' src={props.coverimages[0].original_url} centered bordered/>
 					</Segment>
 					<h1>SCREENSHOTS</h1>
-					<Segment>
+					<Segment vertical>
 						<Carousel elements = {getScreenShotsForCarousel()} showIndicators = {true} />
 					</Segment>
 				</Grid.Column>
-				<Grid.Column>
-					<Segment>
-					<Button onClick={props.onAdd}> Add Game </Button>
-					</Segment>
-					<Segment>
-						<b>Genres:</b>
-						<ul>
-						{getGenres()}
-						</ul>
-					</Segment>
-					<Segment>
-						<b>Keywords:</b>
-						<ul>
-						{getKeywords()}
-						</ul>
-					</Segment>
-					<Segment>
-						<b>Platforms:</b>
-						<ul>
-						{getPlatforms()}
-						</ul>
-					</Segment>
-					<Segment>
-						<b>Modes:</b>
-						<ul>
-						{getModes()}
-						</ul>
-					</Segment>
+				<Grid.Column width={4} compact>
+					<Segment.Group compact raised>
+						<Segment inverted color="black" size="huge" textAlign="center">Game Info</Segment>
+							<Segment vertical inverted color="red" textAlign="center">Genres</Segment>
+						
+							
+								{getGenres()}
+							
+						
+							<Segment vertical inverted color="brown" textAlign="center">Keywords</Segment>
+						
+							
+								{getKeywords()}
+							
+					
+							<Segment vertical inverted color="green" textAlign="center">Modes</Segment>
+						
+						
+								{getModes()}
+							
+						
+							<Segment vertical inverted color="blue" textAlign="center">Platforms</Segment>
+					
+							
+								{getPlatforms()}
+							
+				
+					</Segment.Group>
 				</Grid.Column>
-			</Grid.Row>
-			<Grid.Row>
-				<Button onClick={props.goBack}> GO BACK </Button>
-			</Grid.Row>
+				<Grid.Column width={6} compact>
+					<Segment.Group compact raised>
+					PARTIES
+					{getParties()}
+					</Segment.Group>
+				</Grid.Column>
+				</Grid.Row>
 		</Grid>
 		</React.Fragment>
 		)
