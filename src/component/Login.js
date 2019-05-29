@@ -11,7 +11,7 @@ return (
 
     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
-    <Segment stacked>
+    
     <h1> Login Form </h1>
     <label>Username </label>
      <Input iconPosition='left'placeholder='Username' >
@@ -23,7 +23,7 @@ return (
     <input name="password"onChange={(e)=>props.loginFormControl(e)}type="password" placeholder="password" value={props.password}/>
     </Input><br/>
     <Button  onClick={(e)=>props.submit(props)}>Login</Button>
-     </Segment>
+    
     </Grid.Column>
     </Grid>
     </Container>}

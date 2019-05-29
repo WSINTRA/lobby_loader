@@ -19,7 +19,7 @@ function Register(props) {
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Segment stacked>
+            
               <Input iconPosition="left" placeholder="Email">
                 <Icon name="at" />
                 <input
@@ -63,7 +63,7 @@ function Register(props) {
               </Input>
               <br />
               <Button onClick={e => props.submit(props)}>Register</Button>
-            </Segment>
+           
           </Grid.Column>
         </Grid>
       </Container>
