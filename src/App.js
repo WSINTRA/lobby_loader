@@ -236,6 +236,7 @@ class App extends React.Component {
             userParties: res.user.parties
           })
         );
+      
       });
     }
 
@@ -326,8 +327,7 @@ class App extends React.Component {
             error.name = res.status;
             throw error;
           }
-          return res
-            .json()
+          return res.json()
             .then(userData => {
               localStorage.setItem("myJWT", userData.jwt);
               this.setState({
@@ -335,11 +335,11 @@ class App extends React.Component {
               });
             })
             .then(() => this.props.history.push("/login"));
-        })
-        .catch(err => {
-          alert("password does not match or server Error");
+        }).catch(err => {
+          console.log(err);
         });
     }
+
   };
 
   /////////////////////////////
