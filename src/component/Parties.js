@@ -20,8 +20,8 @@ return (
         <Segment>
         <Header>Parties I own</Header>
         <Container>
-        {props.currenUserOwnedParties.map(party => 
-          <React.Fragment>
+        {props.currentUserOwnedParties.map(party => 
+          <React.Fragment key={party.id}>
         <Sidebar.Pushable as={Card}>
         <Sidebar
             as={Menu}
@@ -35,8 +35,8 @@ return (
           >
             <Menu.Item as='a'>
             <Header inverted color='olive'>{party.name}</Header>
-              <Icon name='frown outline' />
-              Leave Group
+              <Icon name='warning sign' />
+              Delete Party
             </Menu.Item>
            
           </Sidebar>
@@ -60,10 +60,11 @@ return (
       <Segment>
         <Header>Parties I'm in</Header>
         <Container>
-        {props.currentUserParties.map(party => 
-        	<React.Fragment>
-    <Sidebar.Pushable as={Card}>
-     <Sidebar
+        {
+           props.currentUserParties.map(party => 
+        	<React.Fragment key={party.id}>
+            <Sidebar.Pushable as={Card}>
+            <Sidebar
             as={Menu}
             animation='overlay'
             icon='labeled'
@@ -72,13 +73,13 @@ return (
             vertical
             visible={props.sideBarVisible}
             width='thin'
-          >
-            <Menu.Item as='a' onClick={props.leaveGroup}>
+                            >
+            <Menu.Item as='a' onClick={()=>props.leaveGroup(party, props.currentUserId)}>
             <Header inverted color='olive'>{party.name}</Header>
               <Icon name='frown outline' />
-              Leave Group
+              Leave Party
             </Menu.Item>
-           
+    
           </Sidebar>
     <Sidebar.Pusher>        
     <Card>
@@ -88,12 +89,12 @@ return (
     <Card.Content extra>
       <Icon name='user' />
       Max Size {party.partysize}
-    </Card.Content>
-    </Card>
-    </Sidebar.Pusher>
-    </Sidebar.Pushable>
+             </Card.Content>
+           </Card>
+            </Sidebar.Pusher>
+             </Sidebar.Pushable>
     </React.Fragment>
-  )}
+  ) }
         </Container>
       </Segment>
     </Grid.Column>
@@ -106,7 +107,7 @@ return (
         <Container>
         <StackGrid >
          {props.allParties.map(party => 
-            <React.Fragment>
+            <React.Fragment key={party.id}>
         
     <Sidebar.Pushable as={Card}>
      <Sidebar
@@ -122,7 +123,7 @@ return (
             <Menu.Item as='a' onClick={()=>props.joinGroup(party, props.currentUserId)}>
             <Header inverted color='olive'>{party.name}</Header>
               <Icon name='smile outline'  />
-              Join Group
+              Join Party
             </Menu.Item>
            
           </Sidebar>

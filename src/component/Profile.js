@@ -68,14 +68,17 @@ return (
       </Grid.Column>
       <Grid.Column width={3}>
          <Icon size="big"
-              name='group' /> Parties I own
-              {props.userData.owned_parties.map(party => 
-                <h4>{party.name}</h4>)}
+              name='group' /> 
+              Parties I own
+              {props.currentUserOwnedParties ? 
+                props.currentUserOwnedParties.map(party =>  
+                <h4>{party.name}</h4>) : <h5>Add some games and create a party</h5>}
                <Divider/>
                <Icon size="big"
               name='group' /> Parties I'm in'
-              {props.userData.parties.map(party => 
-                <h4>{party.name}</h4>)}
+              {props.currentUserParties ? 
+                props.currentUserParties.map(party => 
+                <h4>{party.name}</h4>) : <h5>Join some parties</h5>}
       </Grid.Column>
     </Grid.Row>
   </Grid>
