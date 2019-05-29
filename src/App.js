@@ -31,6 +31,7 @@ class App extends React.Component {
         allParties: [],
         sideBarVisible: false,
         userParties: [],
+        allMessages: []
     }
 
     leaveGroup = (party, userId) => {
@@ -203,6 +204,7 @@ class App extends React.Component {
   //////////////////////////
   // Fetches all parties and games
     componentDidMount() {
+        
         if (localStorage.myJWT) {
             fetch("http://localhost:3050/profile", {
                 method: "GET",
@@ -215,6 +217,7 @@ class App extends React.Component {
                 }
                 return res.json()
             }).then(res => {
+                // debugger
                     this.setState({
                     userData: res.user,
                     userParties: res.user.parties
@@ -227,6 +230,8 @@ class App extends React.Component {
                 .then(partiesFromDb=> {
                     this.setState( {allParties:partiesFromDb} )
                 })
+
+        this.getMessages()
 
         fetch("http://localhost:3050/games")
             .then(res => res.json())
@@ -268,6 +273,13 @@ class App extends React.Component {
             .then(() => this.props.history.push("/profile"))
     }
 
+    getMessages = () => {
+        fetch("http://localhost:3050/messages")
+            .then(res => res.json())
+                .then(messages=> {
+                    this.setState( {allMessages:messages} )
+         })
+    }
 
     formControl = event => {
         let attribute = event.target.name
@@ -345,6 +357,22 @@ class App extends React.Component {
         }).then(() => this.props.history.push("/login"));
     }
 
+    addMessage = content => {
+        content.user_id = this.state.userData.id
+        fetch("http://localhost:3050/addMessage", {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: `Bearer ${localStorage.myJWT}`
+            },
+            body: JSON.stringify({content})
+        }).then(res => res.json())
+            .then(e => {
+                this.getMessages()
+            })
+    }
+
     renderRegisterPage = () => {
         return !this.state.userData ?
                     <Register 
@@ -392,7 +420,9 @@ class App extends React.Component {
                     allParties={this.state.allParties}
                     currentUserId={this.state.userData.id} 
                     currentUserParties={this.state.userParties}
-                    currentUserOwnedParties={this.state.userData.owned_parties} /> 
+                    currentUserOwnedParties={this.state.userData.owned_parties}
+                    addMessage={this.addMessage} 
+                    allMessages={this.state.allMessages}/> 
                 : 
                     <Redirect from="/parties" to="/login" />
     }
