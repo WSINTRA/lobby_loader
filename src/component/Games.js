@@ -13,7 +13,7 @@ export default class Games extends React.Component {
 
 	render() {
 		return (
-			<StackGrid columnWidth={150}>
+			<StackGrid columnWidth={250}>
 				{this.props.allGames.length < 20
 					? this.props.allGames.map((game, idx) => (
 
@@ -27,7 +27,7 @@ export default class Games extends React.Component {
 					: this.props.allGames
 							.slice(
 								this.props.pageIndex,
-								this.props.pageIndex + 10
+								this.props.pageIndex + 24
 							)
 							.map((game, idx) => (
 

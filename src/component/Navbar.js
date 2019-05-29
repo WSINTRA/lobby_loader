@@ -14,6 +14,11 @@ function Navbar(props) {
         <Link to="/games">Games</Link>
       </Menu.Item>
 
+      <Menu.Item name="Parties">
+        <Icon name="group" />
+        <Link to="/parties">Parties</Link>
+      </Menu.Item>
+      
       {props.loggedIn ? (
         <Menu.Item name="profile">
           <Icon name="user" />
@@ -21,12 +26,8 @@ function Navbar(props) {
         </Menu.Item>
       ) : null}
 
-      <Menu.Item name="Parties">
-        <Icon name="group" />
-        <Link to="/parties">Parties</Link>
-      </Menu.Item>
-
       <Menu.Item position="right">
+
         {props.loggedIn ? null : (
           <Link to="/register">
             <Button primary>Sign up</Button>

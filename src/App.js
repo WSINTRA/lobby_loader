@@ -32,8 +32,36 @@ class App extends React.Component {
     sideBarVisible: false,
     userParties: [],
   }
-  leaveGroup = () => {
-    console.log("Leave this party")
+
+  leaveGroup = (party, userId) => {
+    fetch("http://localhost:3050/removeUser", {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.myJWT}`
+  },
+  body: JSON.stringify({
+     party_id: party.id,
+    user_id: userId,
+  })
+    }).then(res => res.json() )
+    .then(response => {
+  
+
+     console.log("Remove", response.party)
+     let newUserParties = [...this.state.userParties]
+     let array = []
+     for (var i = 0; i < newUserParties.length; i++) {
+       if (newUserParties[i].id !== response.party.id)
+        array.push(newUserParties[i])
+     }
+//Messy looking for loop but works without bugs.. for now..
+      this.setState(prevState=>{
+        return{
+          userParties: array
+        }
+      })
+  })
   }
   ///////////////
   joinGroup = (party, userId) => {
@@ -83,9 +111,13 @@ class App extends React.Component {
     partyDescription: this.state.partyDescription,
   })
  }).then(res => res.json() )
- .then(user => this.setState(prevState=>{return{
-  userData: user,
-  allParties: [...prevState.allParties, {...user.owned_parties}]
+ .then(party => this.setState(prevState=>{return{
+  
+  allParties: [...prevState.allParties, party],
+  userData: {
+    ...prevState.userData,
+    owned_parties: [...prevState.userData.owned_parties, party]}
+
  }
   
  }))
@@ -185,14 +217,7 @@ class App extends React.Component {
   };
   //////////////////////////
   componentDidMount() {
-    fetch("http://localhost:3050/games")
-      .then(res => res.json())
-      .then(response => {
-        this.setState({
-          allGames: response,
-          loading: false
-        });
-      });
+   
 
     if (localStorage.myJWT) {
       fetch("http://localhost:3050/profile", {
@@ -221,16 +246,27 @@ class App extends React.Component {
         allParties:response
       })
     })
+
+     fetch("http://localhost:3050/games")
+      .then(res => res.json())
+      .then(response => {
+        this.setState({
+          allGames: response,
+          loading: false
+        });
+      });
   }
   //////////////////////////
   logOut = () => {
     localStorage.removeItem("myJWT");
     this.setState(
       {
-        userData: null
-      },
-      () => this.props.history.push("/home")
-    );
+        userData: null,
+        userParties: [],
+      }
+    )
+    this.props.history.push("/login");
+
   };
 
   /////////////////////////
@@ -301,7 +337,7 @@ class App extends React.Component {
             .then(() => this.props.history.push("/login"));
         })
         .catch(err => {
-          alert("Incorrect username or password");
+          alert("password does not match or server Error");
         });
     }
   };
@@ -329,18 +365,21 @@ class App extends React.Component {
         }
         return res.json().then(userData => {
           localStorage.setItem("myJWT", userData.jwt);
+          console.log("Auth here",userData.auth.parties)
           this.setState({
-            userData: userData.auth
+            userData: userData.auth,
+            userParties: userData.auth.parties
           });
         });
       })
       .catch(err => {
+        console.log("Error here",err)
         alert("Incorrect username or password");
-      });
+
+      }).then(() => this.props.history.push("/login"));
   };
 
   render() {
-    console.log(this.state)
     const {
       selectedGame,
       loading,
@@ -382,7 +421,7 @@ class App extends React.Component {
       loginFormControl={this.registerFormControl}
       username={username}  
       password={password} />} />
-      <Route path="/games" render={()=>{return <GamesContainer
+      <Route path="/games" render={()=>{return userData ? <GamesContainer
         filterChange={this.filterChange}
         filterValue={filter}
         allGames={this.filterByGame(filter)} 
@@ -392,7 +431,8 @@ class App extends React.Component {
         removeGameFromProfile={this.removeGameFromProfile}
         pageIndex={pageIndex}
         pageIndexLeft={this.pageIndexLeft}
-        pageIndexRight={this.pageIndexRight}/>
+        pageIndexRight={this.pageIndexRight}/> :
+        <Redirect from="/games" to="/login" />
         }} />
       <Route path="/parties" render={()=> {return userData ? <Parties 
         leaveGroup={this.leaveGroup}
@@ -404,13 +444,18 @@ class App extends React.Component {
         allParties={allParties}
         currentUserId={userData.id} 
         currentUserParties={userParties}
-        currenUserOwnedParties={userData.owned_parties} 
-        allParties={allParties} 
-         /> : <Redirect from="/parties" to="/login" />}}/>
-        }
-         }/>
-      <Route path="/edit" render={()=>{return <Edit formControl={this.formControl}userData={userData} loggedIn={userData}handleEdit={this.editSubmit}/>} } />
-      <Route path="/profile" render={()=>{return <Profile 
+        currentUserOwnedParties={userData.owned_parties} 
+         /> : <Redirect from="/parties" to="/login" />}} />
+        
+         
+      <Route path="/edit" render={()=>{return userData ? 
+        <Edit formControl={this.formControl}
+        userData={userData} 
+        loggedIn={userData}
+        handleEdit={this.editSubmit}/> : <Redirect from="/edit" to="/login" />} } />
+      <Route path="/profile" render={()=>{return userData ? <Profile 
+        currentUserOwnedParties={userData.owned_parties} 
+        currentUserParties={userParties}
         registerFormControl={this.registerFormControl}
         partyName={partyName}
         partySize={partySize}
@@ -421,7 +466,8 @@ class App extends React.Component {
         modalOpen={modalOpen}
         createPartyName={createParty}
         removeGameFromProfile={this.removeGameFromProfile}
-        userData={userData}/>} } />
+        userData={userData}/> : <Redirect from="/parties" to="/login" />} }/>
+       
       <Route path="/" component={Home} />
        
 
