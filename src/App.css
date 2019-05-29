@@ -58,7 +58,7 @@ background: #8cc6b0;
 
 }
 body {
-  background: rgb(141,198,176); 
+  background: rgba(141,198,176,0.1); 
   color: rgb(0, 40,  25  );
   background-image: url(Background.png);
   background-size: cover;
@@ -68,28 +68,28 @@ a {
     text-decoration: none;
 }
 .ui.segment {
-  box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+  box-shadow: inset -3px 2px 11px 2px rgba(140, 198, 176,0.1);
   border: 3px rgba(34,36,38,0.2);
   border-radius: .01rem; 
 }
 .ui.celled.grid {
-    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+    box-shadow: inset -3px 2px 11px 2px rgba(140, 198, 176,0.1);
 }
 .ui.celled.grid>.row>.column:first-child {
-    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+    box-shadow: inset -3px 2px 11px 2px rgba(140, 198, 176,0.1);
 }
 .ui.celled.grid>.row>.column {
-    box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+    box-shadow: inset -3px 2px 11px 2px rgba(140, 198, 176,0.1);
 }
 /*.ui.celled.grid>.row>.column {
     box-shadow: inset -20px 0px 9px 0px #8cc6b0;
 }*/
 
 .ui.celled.grid>.row{
-  box-shadow: inset -3px 2px 11px 2px rgb(140, 198, 176);
+  box-shadow: inset -3px 2px 11px 2px rgba(140, 198, 176,0.1);
 }
 .container {
-    background: rgb(37, 117, 86);
+    background: rgba(37, 117, 86,0.1);
 }
 .ui.icon.menu .item {
     height: auto;
@@ -108,11 +108,11 @@ color: #f1f1f1;
     float: right;
     }
 .ui.tertiary.segment {
-    background: #81a561;
+    background: rgba(37,117,86,0.1);
     color: rgb(9, 79, 52);
 }
 .ui.segment{
- background:  rgb(37,117,86);
+ background:  rgba(37,117,86,0.1);
 }
 
 .App-header {

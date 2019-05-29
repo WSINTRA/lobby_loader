@@ -61,7 +61,7 @@ export default class PartyShow extends React.Component {
 								</Segment>
 							</Form>
 						</Comment.Group>
-						<Segment textAlign="center"><h1>CHAT GOES HERE</h1> </Segment>
+						
 					</Grid.Column>
 				</Grid.Row>
 				</Grid>
