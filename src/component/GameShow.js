@@ -68,7 +68,7 @@ function GameShow(props) {
 		<Grid celled>
 			<Grid.Row>
 				<Grid.Column width={16} centered>
-					<Segment vertical size="massive" textAlign="center" inverted color="black" tertiary> 
+					<Segment vertical size="massive" textAlign="center" tertiary> 
 					<Button onClick={props.onAdd}> Add Game </Button>
 					{props.name}
 					<Button onClick={props.goBack}> GO BACK </Button>
@@ -86,18 +86,14 @@ function GameShow(props) {
 					</Segment>
 				</Grid.Column>
 				<Grid.Column width={4} compact>
+				{getParties()}
 					<Segment.Group compact raised>
 						<Segment inverted color="black" size="huge" textAlign="center">Game Info</Segment>
 							<Segment vertical inverted color="red" textAlign="center">Genres</Segment>
 						
 							
 								{getGenres()}
-							
-						
-							<Segment vertical inverted color="brown" textAlign="center">Keywords</Segment>
-						
-							
-								{getKeywords()}
+					
 							
 					
 							<Segment vertical inverted color="green" textAlign="center">Modes</Segment>
@@ -113,11 +109,12 @@ function GameShow(props) {
 							
 				
 					</Segment.Group>
+
+					
 				</Grid.Column>
 				<Grid.Column width={6} compact>
 					<Segment.Group compact raised>
-					PARTIES
-					{getParties()}
+					<p>{props.summary}</p>
 					</Segment.Group>
 				</Grid.Column>
 				</Grid.Row>

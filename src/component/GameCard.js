@@ -18,14 +18,12 @@ function GameCard(props) {
 				</div>
 			<a className="header">{props.game.name}</a>
 			<div className="description"> 
-				<h4>THIS WOULD BE A DESCRIPTION</h4></div>
-			<div className="extra content">
-		      <div className="ui two buttons">
-		        <div className="ui basic green button">Create Party</div>
-		        <div className="ui basic red button">Join Party</div>
-		      </div>
+				<h4>{props.game.summary.slice(0,35)}...</h4>
+				<h5>click for more details</h5></div>
+			
+		      
 		    </div>
-		</div>
+		
 	);
 }
 

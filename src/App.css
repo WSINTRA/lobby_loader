@@ -1,3 +1,34 @@
+.video-background {
+    
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: -99;
+    &::after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background: rgba(0,0,0,0.4)
+    }
+}
+.video-foreground,
+.video-background iframe {
+    filter: sepia(8) saturate(9) hue-rotate(46deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.5;
+}
 .App {
   text-align: center;
 }
@@ -18,8 +49,13 @@ background: #8cc6b0;
 }
 
 .home img {
-   max-width: 100%;
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  max-width: 100%;
   height: auto;
+
 }
 body {
   background: rgb(141,198,176); 
@@ -61,12 +97,19 @@ a {
     color: #ffffff;
 }
 .ui.labeled.icon.menu {
-background: rgba(9,79,53,0.9);
+background: rgba(9,79,53,1);
 }
 .ui.labeled.icon.menu a {
 
 color: #f1f1f1;
 
+}
+.ui.button {
+    float: right;
+    }
+.ui.tertiary.segment {
+    background: #81a561;
+    color: rgb(9, 79, 52);
 }
 .ui.segment{
  background:  rgb(37,117,86);
