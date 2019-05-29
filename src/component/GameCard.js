@@ -11,6 +11,7 @@ function GameCard(props) {
 			}
 	}
 	return (
+		
 		<div className="card" onClick={()=>{props.onGameClick(props.game)}}>
 			<div className="image">
 				<img className="equal" src={getImage()} />
