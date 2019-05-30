@@ -483,7 +483,8 @@ class App extends React.Component {
                     handleShowClick={this.handleShowClick}
                     handleSidebarHide={this.handleSidebarHide}
                     handleHideClick={this.handleHideClick}
-                    allParties={this.state.relevantParties}
+                    allParties={this.state.allParties}
+                    relevantParties={this.state.relevantParties}
                     currentUserId={this.state.userData.id} 
                     currentUserParties={this.state.userParties}
                     currentUserOwnedParties={this.state.userData.owned_parties}
