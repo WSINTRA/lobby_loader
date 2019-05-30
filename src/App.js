@@ -152,12 +152,16 @@ class App extends React.Component {
 
   //////////////
     pageIndexRight = () => {
-        
-        this.setState(prevState => {
+        if (this.state.pageIndex < (this.state.allGames.length - 10 )){
+            this.setState(prevState => {
           return { 
             pageIndex: prevState.pageIndex + 10 
             };
         });
+        }
+        else 
+            return alert("End of games list");
+        
     }
   /////////////
 
@@ -200,7 +204,6 @@ class App extends React.Component {
   ///////////////////////
     addGameToProfile = game => {
         let user = this.state.userData;
-        console.log(game);
         fetch(`http://localhost:3050/addGame`, {
             method: "PATCH",
             headers: {
@@ -218,6 +221,7 @@ class App extends React.Component {
                 userData: user
             })
         }).then(()=>this.setRelevantUserParties())
+        alert("Game added to profile page")
     }
   ///////////////////////
     onGameClick = props => { this.setState({selectedGame: props}) }
