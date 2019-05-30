@@ -10,16 +10,25 @@ class GamesContainer extends React.Component {
 
   state = {
     gameInfo: {},
-    gameView: false
+    gameView: false,
+    gridView: false,
   }
 
   previousPage = () => {
     return <h4 style={{ cursor: "pointer", float: "left" }} onClick={() => this.props.pageIndexLeft()} >
           prev page <Icon name="arrow alternate circle left outline" /> </h4>
   }
-
+  
+  changeView = () => {
+    this.setState(prevState=>{
+      return {
+        gridView: !prevState.gridView
+      }
+      })
+  }
 
   nextPage = () => {
+
     return <h4
           style={{ cursor: "pointer", float: "right" }}
           onClick={() => this.props.pageIndexRight()}
@@ -60,6 +69,9 @@ class GamesContainer extends React.Component {
             <div className="mySearch">
             <h1>GAMES</h1>
             {this.previousPage()}
+            {this.state.gridView ? <Icon name="grid layout" size="big" onClick={this.changeView}/> :
+             <Icon name="unordered list" size="big" onClick={this.changeView}/>}
+            
             <Input
               onChange={this.props.filterChange}
               value={this.props.filterValue}
@@ -70,7 +82,7 @@ class GamesContainer extends React.Component {
             {this.nextPage()}
             </div>}
  
-          {this.state.gameView ? <GameShow {...this.state.gameInfo} goBack={this.goBack} onAdd={this.addCurrentGame} />: <Games {...this.props} onClick={this.viewGame}/>}
+          {this.state.gameView ? <GameShow {...this.state.gameInfo} goBack={this.goBack} onAdd={this.addCurrentGame} />: <Games {...this.props} gridView={this.state.gridView} onClick={this.viewGame}/>}
 
         </React.Fragment>
 
@@ -79,6 +91,11 @@ class GamesContainer extends React.Component {
 }
 
 export default GamesContainer;
+
+//grid layout
+
+//list layout
+
 
 // {this.props.allGames.slice(this.props.pageIndex, this.props.pageIndex + 10).map(game => <GameCard
 //   key={game.id}

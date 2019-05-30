@@ -6,10 +6,16 @@ An advanced game lobby app; a user registers and tells the system what games the
 Once a user is registered they can login and create a new party. 
 Other users can then join the party and send messages to the party.
 A party will have an upper limit of members, once that is reached a notification will be sent to all members of the party to tell them to commence the game.
-The creator of the party will be able to add / remove members. 
-A user with the same game can add themselves to the party. 
 
 Stretch Goals
-Add recommendations based on game genres. 
-Allow users to rate their games and the highest rated game appears on the top games section.
-Allow users to rate other users and highest rated player appears on top players section, some guidelines will be included for what makes a player worthy of a vote.
+Allow logged in user to view the profile of other users who are in a party.
+
+
+TODO:
+[] Fix validations for party capacity and members
+[] Prevent duplicate users in party
+[] Create link navigations from profile page lists of parties to the individual party pages.
+[] Prevent duplicate games in a user profile
+[] Show if a game already belongs to a user in the Game show page
+[] Allow users to remove game from Profile page
+[] Allow user to delete an owned party
