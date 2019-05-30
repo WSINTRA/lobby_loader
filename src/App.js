@@ -26,12 +26,32 @@ class App extends React.Component {
         createParty: "",
         modalOpen: false,
         partyName: "",
-        partySize: 0,
+        partySize: "",
         partyDescription: "",
         allParties: [],
         sideBarVisible: false,
         userParties: [],
-        allMessages: []
+        allMessages: [],
+        relevantParties: []
+    }
+
+    resetUserData = () => {
+        this.setState({
+            username: "",
+            password: "",
+            email: "",
+            confirmPass: "",
+            userData: null,
+            filter: "",
+            selectedGame: "",
+            pageIndex: 0,
+            createParty: "",
+            partyName: "",
+            partySize: 0,
+            partyDescription: "",
+            userParties: [],
+            relevantParties: []
+        })
     }
 
     leaveGroup = (party, userId) => {
@@ -79,11 +99,17 @@ class App extends React.Component {
                 user_id: userId,
             })
         }).then(res => res.json())
-            .then(response => this.setState(prevState=>{ 
+            .then(response => {
+                let newRelevantParties = [...this.state.relevantParties].filter(partay=>{
+                    return partay.id !== response.party.id
+                })
+                this.setState(prevState=>{ 
                 return {
-                    userParties: [...prevState.userParties, response.party]
+                    userParties: [...prevState.userParties, response.party],
+                    relevantParties: newRelevantParties
                 }
-            }))
+            })
+        })
     }
 
     handleSidebarHide = () => this.setState({ sideBarVisible: false })
@@ -190,8 +216,11 @@ class App extends React.Component {
                 user: user
             })
         }).then(res => res.json())
-        .then(user => this.setState({userData: user})
-        )
+        .then(user => {
+            this.setState({
+                userData: user
+            })
+        }).then(()=>this.setRelevantUserParties())
         alert("Game added to profile page")
     }
   ///////////////////////
@@ -250,10 +279,11 @@ class App extends React.Component {
   //////////////////////////
     logOut = () => {
         localStorage.removeItem("myJWT")
-            this.setState({
-                userData: null,
-                userParties: [],
-            })
+            // this.setState({
+            //     userData: null,
+            //     userParties: [],
+            // })
+        this.resetUserData()
         this.props.history.push("/login")
     }
 
@@ -292,6 +322,35 @@ class App extends React.Component {
         let newUserData = { ...this.state.userData }
         newUserData[attribute] = value
         this.setState( {userData: newUserData} )
+    }
+
+    setRelevantUserParties = () => {
+        let releParties = this.getRelevantUserParties()
+        // debugger
+        this.setState({
+            relevantParties: releParties
+        })        
+    }
+
+
+    getRelevantUserParties = () => {
+        let ownedParties = [...this.state.userData.owned_parties].map(party => {
+            return party.id
+        })
+        let joinedParties = [...this.state.userData.parties].map(party => {
+            return party.id
+        })
+        let ownedGames = [...this.state.userData.games].map(game => {
+            return game.id
+        })
+        let allParties = [...this.state.allParties].filter(party=> {
+            if(!ownedParties.includes(party.id) || !joinedParties.includes(party.id)) {
+                if(ownedGames.includes(party.game.id)) {
+                    return party
+                }
+            }
+        })
+        return allParties
     }
 
     onRegisterFormSubmit = props => {
@@ -356,7 +415,9 @@ class App extends React.Component {
                 userData: userData.auth,
                 userParties: userData.auth.parties
             })
-        }).catch(err => {
+            this.setRelevantUserParties()
+        }).then(()=> this.setRelevantUserParties())
+            .catch(err => {
             console.log("Error here",err)
             alert("Incorrect username or password");
         }).then(() => this.props.history.push("/login"));
@@ -422,7 +483,7 @@ class App extends React.Component {
                     handleShowClick={this.handleShowClick}
                     handleSidebarHide={this.handleSidebarHide}
                     handleHideClick={this.handleHideClick}
-                    allParties={this.state.allParties}
+                    allParties={this.state.relevantParties}
                     currentUserId={this.state.userData.id} 
                     currentUserParties={this.state.userParties}
                     currentUserOwnedParties={this.state.userData.owned_parties}
