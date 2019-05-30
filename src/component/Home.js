@@ -18,12 +18,12 @@ render() {
 
   const videoOptions = {
     playerVars: { // https://developers.google.com/youtube/player_parameters
-      disablekb: 0,
+      disablekb: 1,
       autoplay: 1,
       controls: 0,
       rel: 0,
       showinfo: 0,
-      start: 1,
+      start: 4,
       loop: 1,
       fs: 0,
       iv_load_policy: 3,
@@ -48,6 +48,8 @@ render() {
 
       </div>
       <img alt="LobbyLoader" src={home} />
+      <p className="homeText">Login and join the party! 
+      Add games to your profile and create new parties. Get other users to join your party and send party messages.</p>
 
       <div className="video-background">
         <div className="video-foreground">

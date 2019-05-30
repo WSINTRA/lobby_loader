@@ -18,7 +18,7 @@ function GameCard(props) {
 				</div>
 			<a className="header">{props.game.name}</a>
 			<div className="description"> 
-				<h4>{props.game.summary.slice(0,35)}...</h4>
+				<h4>{props.game.summary < 35 ? props.game.summary : props.game.summary.slice(0,35)}...</h4>
 				<h5>click for more details</h5></div>
 			
 		      

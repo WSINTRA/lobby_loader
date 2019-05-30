@@ -6,23 +6,27 @@ function Navbar(props) {
   return (
     <Menu icon="labeled">
       <Menu.Item name="home">
-        <Icon name="home" />
-        <Link to="/home">Home</Link>
+        <Link to="/home">
+        <Icon name="home" size="big" />
+        Home</Link>
       </Menu.Item>
       <Menu.Item name="gamepad">
-        <Icon name="gamepad" />
-        <Link to="/games">Games</Link>
+        <Link to="/games">
+        <Icon name="gamepad" size="big" />
+        Games</Link>
       </Menu.Item>
 
       <Menu.Item name="Parties">
-        <Icon name="group" />
-        <Link to="/parties">Parties</Link>
+        <Link to="/parties">
+        <Icon name="group" size="big" />
+        Parties</Link>
       </Menu.Item>
       
       {props.loggedIn ? (
         <Menu.Item name="profile">
-          <Icon name="user" />
-          <Link to="/profile">Profile</Link>
+        <Link to="/profile">
+          <Icon name="user" size="big" />
+          Profile</Link>
         </Menu.Item>
       ) : null}
 
@@ -36,10 +40,10 @@ function Navbar(props) {
       </Menu.Item>
       <Menu.Item>
         {props.loggedIn ? (
-          <Button onClick={props.logout}>Log-out</Button>
+          <Button onClick={props.logout}>Logout</Button>
         ) : (
           <Link to="/login">
-            <Button>Log-in</Button>
+            <Button>Login</Button>
           </Link>
         )}
       </Menu.Item>

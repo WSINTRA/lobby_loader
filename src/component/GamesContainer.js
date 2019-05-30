@@ -53,7 +53,6 @@ class GamesContainer extends React.Component {
   }
 
   render() {
-    console.log(this.state)
   return (
       <React.Fragment>
 
@@ -71,8 +70,6 @@ class GamesContainer extends React.Component {
             {this.nextPage()}
             </div>}
  
-
-
           {this.state.gameView ? <GameShow {...this.state.gameInfo} goBack={this.goBack} onAdd={this.addCurrentGame} />: <Games {...this.props} onClick={this.viewGame}/>}
 
         </React.Fragment>

@@ -5,14 +5,9 @@ import React from "react";
 export default class Games extends React.Component {
 
 
-
-	testing = () => {
-		debugger
-	}
-
-
 	render() {
 		return (
+			<div className="gameShow" >
 			<StackGrid columnWidth={250}>
 				{this.props.allGames.length < 20
 					? this.props.allGames.map((game, idx) => (
@@ -39,6 +34,7 @@ export default class Games extends React.Component {
 
 							))}
 			</StackGrid>
+			</div>
 		);
 	}
 }
