@@ -19,7 +19,7 @@ export default class PartyShow extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.party)
+		console.log("Party props",this.props.party)
 		return (
 			<div>
 				<Grid centered columns={1}>
@@ -32,7 +32,8 @@ export default class PartyShow extends React.Component {
 							<Segment textAlign="center">Name: {this.props.party.name} <br/></Segment>
 							<Segment textAlign="center">Description: {this.props.party.description} <br/></Segment>
 							<Segment textAlign="center">Total Partysize: {this.props.party.partysize} <br/></Segment>
-							<Segment textAlign="center">Current Size: {this.props.party.space.taken} <br/></Segment>
+							{this.props.party.space.taken || 
+								this.props.party.space.taken !== undefined ? <Segment textAlign="center">Current Size: {this.props.party.space.taken} <br/></Segment> : null }
 							<Segment textAlign="center">Party Owner: <b>{this.props.party.user.username}</b> </Segment>
 						</Segment.Group>
 					</Segment.Group>

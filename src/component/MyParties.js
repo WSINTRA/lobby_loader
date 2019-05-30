@@ -111,11 +111,11 @@ function MyParties(props) {
 						<Grid.Row columns={1}>
 
 
-					<Grid.Column centered>
+					<Grid.Column centered={"true"}>
 						<Header>Available Parties</Header>
 
 						<StackGrid columnWidth={250}>
-						{props.allParties.map(party => 
+						{props.relevantParties.map(party => 
 						<React.Fragment key={party.id}>
 
 						<Sidebar.Pushable as={Card}>

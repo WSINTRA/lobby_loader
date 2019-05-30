@@ -48,8 +48,9 @@ render() {
 
       </div>
       <img alt="LobbyLoader" src={home} />
-      <p className="homeText">Login and join the party! 
-      Add games to your profile and create new parties. Get other users to join your party and send party messages.</p>
+      <p className="homeText">
+      <strong>Login and join the party! 
+      Add games to your profile and create new parties. Get other users to join your party and send party messages.</strong></p>
 
       <div className="video-background">
         <div className="video-foreground">

@@ -69,6 +69,7 @@ return (
 
       </Grid.Column>
       <Grid.Column width={3}>
+      <Link to="/parties">
          <Icon size="big"
               name='group' /> 
               Parties I own
@@ -80,7 +81,7 @@ return (
               name='group' /> Parties I'm in'
               {props.currentUserParties ? 
                 props.currentUserParties.map(party => 
-                <h4>{party.name}</h4>) : <h5>Join some parties</h5>}
+                <h4>{party.name}</h4>) : <h5>Join some parties</h5>}</Link>
       </Grid.Column>
     </Grid.Row>
   </Grid>
