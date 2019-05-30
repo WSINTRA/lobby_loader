@@ -30,7 +30,7 @@ return (
       <Grid.Column width={10}>
         <h3>Games in your collection</h3>
         {props.userData.games.map(game => <React.Fragment key={game.id}>
-          <h4>{game.name}</h4>
+          <h4>{game.name}
           
         <Modal
         trigger={<Button onClick={props.handleModalOpen}>Create New Party</Button>}
@@ -38,7 +38,7 @@ return (
         onClose={props.handleModalClose}
         basic
         size='small'
-      >
+        >
         <Header icon='group' content='New Party Time !' />
         <Modal.Content>
            <Form>
@@ -62,9 +62,11 @@ return (
           </Button>
         </Modal.Actions>
       </Modal>
-      
       <Divider/>
+      </h4>
+      
           </React.Fragment> )}
+
       </Grid.Column>
       <Grid.Column width={3}>
          <Icon size="big"

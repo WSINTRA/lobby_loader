@@ -71,7 +71,7 @@ function GameShow(props) {
 					<Segment vertical size="massive" textAlign="center" tertiary> 
 					<Button onClick={props.onAdd}> Add Game </Button>
 					{props.name}
-					<Button onClick={props.goBack}> GO BACK </Button>
+					<Button floated='left' onClick={props.goBack}> Go Back </Button>
 					</Segment>
 				</Grid.Column>
 			</Grid.Row>
@@ -80,13 +80,10 @@ function GameShow(props) {
 					<Segment vertical centered>
 						<Image size='huge' src={props.coverimages[0].original_url} centered bordered/>
 					</Segment>
-					<h1>SCREENSHOTS</h1>
-					<Segment vertical>
-						<Carousel elements = {getScreenShotsForCarousel()} showIndicators = {true} />
-					</Segment>
+					
 				</Grid.Column>
 				<Grid.Column width={4} compact>
-				{getParties()}
+				{getParties() ? <h5>Existing game parties {getParties()}</h5> : null}
 					<Segment.Group compact raised>
 						<Segment inverted color="black" size="huge" textAlign="center">Game Info</Segment>
 							<Segment vertical inverted color="red" textAlign="center">Genres</Segment>
@@ -116,6 +113,10 @@ function GameShow(props) {
 					<Segment.Group compact raised>
 					<p>{props.summary}</p>
 					</Segment.Group>
+					<h1>SCREENSHOTS</h1>
+					<Segment vertical>
+						<Carousel elements = {getScreenShotsForCarousel()} showIndicators = {true} />
+					</Segment>
 				</Grid.Column>
 				</Grid.Row>
 		</Grid>
