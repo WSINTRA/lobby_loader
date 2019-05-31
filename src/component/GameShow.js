@@ -7,10 +7,9 @@ function GameShow(props) {
 
 
 	const getScreenShotsForCarousel = () => {
-		console.log(props)
 		return props.screenshots.map(screenshot => {
 			return {render:()=>{
-				return <div> <img style={{width: "100%", height: "100%"}} src={screenshot.original_url}/></div>
+				return <Segment> <img style={{width: "100%", height: "100%"}} src={screenshot.original_url}/></Segment>
 			}}
 		})
 	}
@@ -114,9 +113,9 @@ function GameShow(props) {
 					<p>{props.summary}</p>
 					</Segment.Group>
 					<h1>SCREENSHOTS</h1>
-					<Segment vertical>
+					
 						<Carousel elements = {getScreenShotsForCarousel()} showIndicators = {true} />
-					</Segment>
+					
 				</Grid.Column>
 				</Grid.Row>
 		</Grid>
